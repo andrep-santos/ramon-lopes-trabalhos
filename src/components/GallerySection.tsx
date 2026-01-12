@@ -1,7 +1,13 @@
 import { useState } from "react";
-import { Eye, ImageIcon, X } from "lucide-react";
+import { Eye, X } from "lucide-react";
 
-// Importações reais das suas fotos
+// 1. Importações das novas fotos com a extensão .jpeg correta
+import corredorBranco from "@/assets/corredor-branco.jpeg";
+import escritorioTeto from "@/assets/Escritorio-02-teto.jpeg";
+import fotoEscritorio from "@/assets/foto-escritório.jpeg";
+import paredesBrancas from "@/assets/foto-paredes-brancas.jpeg";
+
+// 2. Importações das fotos anteriores
 import galleryPilar from "@/assets/gallery-pilar.png";
 import galleryRepintura from "@/assets/gallery-repintura.png";
 import galleryPinturaInterna from "@/assets/gallery-pintura-interna.png";
@@ -18,27 +24,56 @@ export interface GalleryItem {
 const galleryItems: GalleryItem[] = [
   {
     id: 1,
+    title: "Corredor e Acabamento",
+    description: "Pintura impecável em áreas de circulação",
+    story: "Neste corredor curvo, focamos na uniformidade da pintura branca para valorizar o design arquitetônico e o piso em mármore, criando um ambiente amplo e limpo.",
+    image: corredorBranco,
+  },
+  {
+    id: 2,
+    title: "Escritório - Detalhe Teto",
+    description: "Pintura técnica em gesso e sancas",
+    story: "Acabamento de alto padrão realizado em teto de escritório, com recortes perfeitos ao redor de luminárias lineares e ar-condicionado central.",
+    image: escritorioTeto,
+  },
+  {
+    id: 3,
+    title: "Escritório Corporativo",
+    description: "Renovação completa de ambiente de trabalho",
+    story: "Transformação de sala de reuniões com pintura acetinada, garantindo um ambiente profissional renovado com agilidade e limpeza pós-obra.",
+    image: fotoEscritorio,
+  },
+  {
+    id: 4,
+    title: "Paredes Brancas Premium",
+    description: "Trabalho de massa e pintura acetinada",
+    story: "Aplicação detalhada de massa corrida e pintura em paredes de pé direito alto, resultando em superfícies lisas e sem imperfeições sob iluminação direta.",
+    image: paredesBrancas,
+  },
+  // Fotos anteriores
+  {
+    id: 5,
     title: "Pintura de Pilar - Restaurante",
     description: "Pintura de pilar interno",
     story: "Este trabalho de pintura em pilar foi realizado em um restaurante, garantindo um acabamento liso e uniforme para compor a decoração do ambiente.",
     image: galleryPilar,
   },
   {
-    id: 2,
+    id: 6,
     title: "Repintura de Mural Artístico",
     description: "Revitalização de arte em parede",
     story: "Neste projeto, revitalizamos as cores de um desenho existente, mantendo a identidade visual original com um novo acabamento de alta qualidade.",
     image: galleryRepintura,
   },
   {
-    id: 3,
+    id: 7,
     title: "Pintura Interna Comercial",
     description: "Acabamento interno premium",
     story: "Um projeto focado em precisão nos detalhes e cantos, transformando o ambiente comercial com cores modernas e aplicação impecável.",
     image: galleryPinturaInterna,
   },
   {
-    id: 4,
+    id: 8,
     title: "Fachada Restaurante Mezzogiorno",
     description: "Pintura externa durável",
     story: "Pintura completa da fachada externa, utilizando tintas resistentes para garantir a beleza e proteção da estrutura contra o tempo.",
@@ -57,10 +92,11 @@ const GallerySection = () => {
              <span className="text-gradient">Minha Galeria</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Confira alguns dos meus trabalhos. Clique em "Ver mais" para conhecer a história por trás de cada obra.
+             Confira alguns dos meus trabalhos mais recentes. Clique para conhecer os detalhes de cada projeto.
           </p>
         </div>
 
+        {/* Responsividade mobile: 1 coluna no celular, 2 no tablet e 4 no PC */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {galleryItems.map((item, index) => (
             <div
@@ -79,7 +115,7 @@ const GallerySection = () => {
                   <h3 className="text-white text-xl font-bold mb-2">{item.title}</h3>
                   <button
                     onClick={() => setSelectedItem(item)}
-                    className="flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-medium hover:bg-primary/90 transition-colors"
+                    className="flex items-center gap-2 bg-orange-500 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-orange-600 transition-colors"
                   >
                     <Eye size={16} />
                     Ver detalhes
@@ -91,7 +127,7 @@ const GallerySection = () => {
         </div>
       </div>
 
-      {/* Modal Simplificado (Sem depender de bibliotecas externas) */}
+      {/* Modal de Visualização */}
       {selectedItem && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm" onClick={() => setSelectedItem(null)}>
           <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-auto relative" onClick={(e) => e.stopPropagation()}>
@@ -106,7 +142,7 @@ const GallerySection = () => {
               <h2 className="text-2xl md:text-3xl font-bold mb-2 text-gradient">{selectedItem.title}</h2>
               <p className="text-lg text-muted-foreground mb-6">{selectedItem.description}</p>
               <div className="border-t border-gray-100 pt-6">
-                <h3 className="text-lg font-semibold mb-3">A História por Trás da Obra</h3>
+                <h3 className="text-lg font-semibold mb-3">Sobre este projeto</h3>
                 <p className="text-gray-600 leading-relaxed">{selectedItem.story}</p>
               </div>
             </div>
